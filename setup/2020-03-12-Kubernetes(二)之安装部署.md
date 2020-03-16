@@ -1,15 +1,3 @@
----
-layout:     post
-title:      Kubernetes(二)之安装部署
-subtitle:   Kubernetes 安装部署
-date:       2020-03-13
-author:     Frederick
-header-img: img/dushu.jpg
-catalog: true
-tags:
-    - Kubernetes
----
-
 
 # Kubernetes 安装部署
 ## 1.环境准备
