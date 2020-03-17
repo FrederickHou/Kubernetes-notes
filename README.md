@@ -3,7 +3,7 @@
 
 # Kubernetes 学习笔记
 
-> 本系列是 [Kubernetes 学习笔记](https://www.huweihuang.com/kubernetes-notes/)
+> 本系列是 [Kubernetes 学习笔记](https://www.frederickhou.com/Kubernetes-notes/)
 >
 > 个人博客：[www.frederickhou.com](https://www.frederickhou.com/)
 
