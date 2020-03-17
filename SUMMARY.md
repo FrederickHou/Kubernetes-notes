@@ -8,5 +8,5 @@
 
 ## 安装与配置
 
-* [\[kubernetes安装部署\]\(setup/2020-03-12-Kubernetes\(二\)之安装部署.md\)](an-zhuang-yu-pei-zhi/kubernetes-an-zhuang-bu-shu-setup20200312kubernetes-er-zhi-an-zhuang-bu-shu-.md.md)
+* [kubernetes安装部署](an-zhuang-yu-pei-zhi/kubernetes-an-zhuang-bu-shu-setup20200312kubernetes-er-zhi-an-zhuang-bu-shu-.md.md)
 
