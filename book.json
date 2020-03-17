@@ -45,7 +45,7 @@
         "donate": {
             "wechat": "https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true",
             "title": "",
-            "button": "感谢大佬赞赏",
+            "button": "赞赏",
             "wechatText": ""
         },
         "sharing": {
