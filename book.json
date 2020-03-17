@@ -43,8 +43,8 @@
             ]
         },
         "donate": {
-            "wechat": "./source/images/wechat.png",
-            "title": "点这里哦！",
+            "wechat": "https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true",
+            "title": "感谢支持！！！",
             "button": "赞赏",
             "wechatText": "如果觉得文章有帮助的话，可以打赏一下，谢谢！"
         },
@@ -75,12 +75,12 @@
             "showLevel": false
         },
         "favicon":{
-            "shortcut": "./source/images/images.png",
-            "bookmark": "./source/images/images.png",
-            "appleTouch": "./source/images/kubernetes-card.png",
+            "shortcut": "https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png",
+            "bookmark":  "https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png",
+            "appleTouch": "https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png",
             "appleTouchMore": {
-                "120x120": "./source/images/kubernetes-card.png",
-                "180x180": "./source/images/kubernetes-card.png"
+                "120x120": "https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png",
+                "180x180": "https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png"
             }
         }
     }

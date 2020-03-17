@@ -7,7 +7,7 @@
 >
 > 个人博客：[www.frederickhou.com](https://www.frederickhou.com/)
 
-* [介绍](README.md)
+* [Kubernetes](README.md)
 * [第一章](concept/README.md)
     * [基本概念](concept/kubernetes_fundation.md)
 * [第二章](setup/README.md)
