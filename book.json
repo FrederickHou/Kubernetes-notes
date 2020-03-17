@@ -44,9 +44,9 @@
         },
         "donate": {
             "wechat": "https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true",
-            "title": "感谢支持！！！",
-            "button": "赞赏",
-            "wechatText": "如果觉得文章有帮助的话，可以打赏一下，谢谢！"
+            "title": "",
+            "button": "感谢大佬赞赏",
+            "wechatText": ""
         },
         "sharing": {
             "douban": false,
@@ -59,6 +59,7 @@
             "messenger": false,
             "pocket": false,
             "qq": false,
+            "wechat":true,
             "qzone": false,
             "stumbleupon": false,
             "twitter": false,
@@ -68,7 +69,7 @@
             "whatsapp": false,
             "all": [
                 "google", "facebook", "weibo", "twitter",
-                "qq", "qzone", "linkedin", "pocket"
+                "qq", "wechat","qzone", "linkedin", "pocket"
             ]
         },
         "anchor-navigation-ex": {
