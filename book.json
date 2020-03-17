@@ -49,27 +49,14 @@
             "wechatText": ""
         },
         "sharing": {
-            "douban": false,
             "facebook": false,
-            "google": false,
-            "hatenaBookmark": false,
-            "instapaper": false,
-            "line": false,
-            "linkedin": false,
-            "messenger": false,
-            "pocket": false,
             "qq": false,
-            "wechat":true,
             "qzone": false,
-            "stumbleupon": false,
             "twitter": false,
-            "viber": false,
-            "vk": false,
             "weibo": false,
-            "whatsapp": false,
             "all": [
-                "google", "facebook", "weibo", "twitter",
-                "qq", "wechat","qzone", "linkedin", "pocket"
+                 "facebook", "weibo", "twitter",
+                "qq", "qzone"
             ]
         },
         "anchor-navigation-ex": {
