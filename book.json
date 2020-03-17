@@ -1,0 +1,87 @@
+{
+    "title": "Kubernetes 学习笔记",
+    "author": "Frederick hou",
+    "description": "在成为极客的路上",
+    "language": "zh-hans",
+    "gitbook": "3.2.3",
+    "styles": {
+        "website": "./styles/website.css"
+    },
+    "structure": {
+        "readme": "README.md"
+    },
+    "links": {
+        "sidebar": {
+            "我的博客": "https://Frederickhou.com"
+        }
+    },
+    "plugins": [
+        "-sharing",
+        "splitter",
+        "expandable-chapters-small",
+        "anchors",
+
+        "github",
+        "github-buttons",
+        "donate",
+        "sharing-plus",
+        "anchor-navigation-ex",
+        "favicon"
+    ],
+    "pluginsConfig": {
+        "github": {
+            "url": "https://github.com/FrederickHou/Kubernetes-notes"
+        },
+        "github-buttons": {
+            "buttons": [{
+                "user": "frederickhou",
+                "repo": "Kubernetes-notes",
+                "type": "star",
+                "size": "small",
+                "count": true
+                }
+            ]
+        },
+        "donate": {
+            "wechat": "./source/images/wechat.png",
+            "title": "点这里哦！",
+            "button": "赞赏",
+            "wechatText": "如果觉得文章有帮助的话，可以打赏一下，谢谢！"
+        },
+        "sharing": {
+            "douban": false,
+            "facebook": false,
+            "google": false,
+            "hatenaBookmark": false,
+            "instapaper": false,
+            "line": false,
+            "linkedin": false,
+            "messenger": false,
+            "pocket": false,
+            "qq": false,
+            "qzone": false,
+            "stumbleupon": false,
+            "twitter": false,
+            "viber": false,
+            "vk": false,
+            "weibo": false,
+            "whatsapp": false,
+            "all": [
+                "google", "facebook", "weibo", "twitter",
+                "qq", "qzone", "linkedin", "pocket"
+            ]
+        },
+        "anchor-navigation-ex": {
+            "showLevel": false
+        },
+        "favicon":{
+            "shortcut": "./source/images/images.png",
+            "bookmark": "./source/images/images.png",
+            "appleTouch": "./source/images/kubernetes-card.png",
+            "appleTouchMore": {
+                "120x120": "./source/images/kubernetes-card.png",
+                "180x180": "./source/images/kubernetes-card.png"
+            }
+        }
+    }
+}

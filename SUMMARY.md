@@ -1,13 +1,7 @@
-# Table of contents
+# 摘要
 
-* [Kubernetes 学习笔记](README.md)
-* [目录](mu-lu.md)
-
-## 基本概念
-
-* [kubernetes基础介绍](ji-ben-gai-nian/kubernetes-ji-chu-jie-shao-setup20200312kubernetes-er-zhi-an-zhuang-bu-shu-.md.md)
-
-## 安装与配置
-
-* [kubernetes安装部署](an-zhuang-yu-pei-zhi/kubernetes-an-zhuang-bu-shu-setup20200312kubernetes-er-zhi-an-zhuang-bu-shu-.md.md)
-
+* [介绍](README.md)
+* [第一章](concept/README.md)
+    * [基本概念](concept/kubernetes_fundation.md)
+* [第二章](setup/README.md)
+    * [安装与配置](setup/kubernetes_install_deploy.md)
