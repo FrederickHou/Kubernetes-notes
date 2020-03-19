@@ -1,1 +1,3 @@
-# Kubernetes 基础知识介绍
+# Kubernetes 基础篇
+
+本篇以Kubernetes基础概念，以及相关Kubernetes核心组件介绍为主，以及涉及到的相关Kubernetes技术栈。
