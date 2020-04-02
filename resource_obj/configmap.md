@@ -49,7 +49,7 @@ ConfigMap 对象将配置数据以键值对的形式存储，这些数据可以�
     spec:
       initContainers:
         - name: fix-permissions
-          image: "{{ .ImageBusyBox }}"
+          image: "docker.io/busybox:latest"
           command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
           securityContext:
             privileged: true
@@ -57,30 +57,30 @@ ConfigMap 对象将配置数据以键值对的形式存储，这些数据可以�
             - name: data
               mountPath: /usr/share/elasticsearch/data
         - name: increase-vm-max-map
-          image: "{{ .ImageBusyBox }}"
+          image: "docker.io/busybox:latest"
           command: ["sysctl", "-w", "vm.max_map_count=262144"]
           securityContext:
             privileged: true
         - name: increase-fd-ulimit
-          image: "{{ .ImageBusyBox }}"
+          image: "docker.io/busybox:latest"
           command: ["sh", "-c", "ulimit -n 65536"]
           securityContext:
             privileged: true
       containers:
         - name: elasticsearch
-          image: "{{ .ImageEs}}"
+          image: "docker.elastic.co/elasticsearch/elasticsearch:6.8.7"
           imagePullPolicy: Always
           env:
             - name: CLUSTER_NAME
-              value: "sb-{{ .InstanceID }}-es-cluster"
+              value: "sb-wewwqwqreds-es-cluster"
             - name:  NODE_MASTER
               value: "true"
             - name: ES_JAVA_OPTS
               value: "-Xms512m -Xmx512m"
             - name: DISCOVERY_ZEN_PING_UNICAST_HOSTS
-              value: "sb-{{ .InstanceID }}-es-cluster-discovery"
+              value: "sb-wewwqwqreds-es-cluster-discovery"
             - name: DISCOVERY_ZEN_MINIMUM_MASTER_NODES
-              value: "{{ .MasterMinNumber }}"
+              value: "3"
           # - name: "bootstrap.memory_lock"
           #   value: "true"
           ports:
@@ -100,14 +100,14 @@ ConfigMap 对象将配置数据以键值对的形式存储，这些数据可以�
               subPath: elasticsearch.yml
           resources:
             limits:
-              memory: "{{ .ContainerMemory }}Gi"
-              cpu: "{{ .ContainerCPU }}"
+              memory: "1Gi"
+              cpu: "1"
       nodeSelector:
-        kubernetes.io/hostname: "{{ .TempHost }}"
+        kubernetes.io/hostname: "cent165"
       volumes:
         - name: data
           hostPath:
-            path: "{{ .TempDataPath}}"
+            path: "/data/es"
         - name: elasticsearch-config
           configMap:
             name: "es-config"

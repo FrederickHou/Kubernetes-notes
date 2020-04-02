@@ -3,9 +3,7 @@
 
 # Kubernetes 学习笔记
 
-
-
-* [简介](intruduce.md)
+* [前言](intruduce.md)
 * [第一章](concept/README.md)
     * [Kubernetes基本概念](concept/kubernetes_fundation.md)
     * [Kubernetes核心组件介绍](concept/kubernetes_compoent.md)
@@ -13,6 +11,7 @@
 * [第二章](setup/README.md)
     * [Kubernetes安装与配置](setup/kubernetes_install_deploy.md)
     * [Kubernetes对象理解](setup/obj.md)
+    * [Kubernetes 亲和性和反亲和性](setup/affinity_antiaffinity.md)
 * [第三章](resource_obj/README.md)
     * [POD和JOB](resource_obj/Pod_Job.md)
     * [Namespace](resource_obj/namespace.md)

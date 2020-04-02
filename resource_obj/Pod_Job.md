@@ -33,8 +33,8 @@ Pod的资源请求就是Pod中所有容器资源请求之和。K8S在调度Pod�
 
     resources:
     limits:
-        memory: {{ .ContainerMemory }}Gi
-        cpu: {{ .ContainerCPU }}
+        memory: 1Gi
+        cpu: 1
 
 
 ### 一pod多容器
