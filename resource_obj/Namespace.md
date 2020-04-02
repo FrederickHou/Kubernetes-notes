@@ -1,0 +1,1 @@
+# Namespace 资源对象

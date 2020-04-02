@@ -3,14 +3,34 @@
 
 # Kubernetes 学习笔记
 
-> 本系列是 [Kubernetes 学习笔记](https://www.frederickhou.com/Kubernetes-notes/)
->
-> 个人博客：[www.frederickhou.com](https://www.frederickhou.com/)
 
-* [简介](README.md)
+
+* [简介](intruduce.md)
 * [第一章](concept/README.md)
     * [Kubernetes基本概念](concept/kubernetes_fundation.md)
     * [Kubernetes核心组件介绍](concept/kubernetes_compoent.md)
     * [Kubernetes容器云平台技术栈](concept/kubernetes_tech_stack.md)
 * [第二章](setup/README.md)
     * [Kubernetes安装与配置](setup/kubernetes_install_deploy.md)
+    * [Kubernetes对象理解](setup/obj.md)
+* [第三章](resource_obj/README.md)
+    * [POD和JOB](resource_obj/Pod_Job.md)
+    * [Namespace](resource_obj/namespace.md)
+    * [Secret](resource_obj/secret.md)
+    * [ConfigMap](resource_obj/configmap.md)
+    * [Volume](resource_obj/volume.md)
+    * [PersistentVolume&PersistentVolumeClaim](resource_obj/pv_pvc.md)
+    * [Service](resource_obj/service.md)
+    * [Ingress](resource_obj/ingress.md)
+    * [ReplicaSet](resource_obj/replicaset.md)
+    * [Deployment](resource_obj/deployment.md)
+    * [DaemonSet](resource_obj/daemonset.md)
+    * [Statefulset](resource_obj/statefulset.md)
+* [第四章](develop/README.md)
+    * [Schedule源码学习](develop/schedule.md)
+    * [client-go源码学习](develop/client_go.md)
+* [第五章](bigdata/README.md)
+    * [Elasticsearch 基础](bigdata/Elasticsearch_basis.md)
+    * [Elasticsearch 容器化方案](bigdata/Elasticsearch_deploy.md)
+    * [MySQL 基础](bigdata/MySQL_basia.md)
+    * [MySQL 容器化方案](bigdata/MySQL_deploy.md)
