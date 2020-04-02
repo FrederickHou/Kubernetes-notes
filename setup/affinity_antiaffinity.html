@@ -1,0 +1,809 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Kubernetes 亲和性和反亲和性 · Kubernetes 学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Frederick hou">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../resource_obj/" />
+    
+    
+    <link rel="prev" href="obj.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png'>
+    
+    
+        
+        <link rel="apple-touch-icon" sizes="120x120" href="../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png">
+        
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"frederickhou","repo":"Kubernetes-notes","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://www.frederickhou.com" target="_blank" class="custom-link">我的博客</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    目录
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../intruduce.html">
+            
+                <a href="../intruduce.html">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../concept/">
+            
+                <a href="../concept/">
+            
+                    
+                    第一章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../concept/kubernetes_fundation.html">
+            
+                <a href="../concept/kubernetes_fundation.html">
+            
+                    
+                    Kubernetes基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../concept/kubernetes_compoent.html">
+            
+                <a href="../concept/kubernetes_compoent.html">
+            
+                    
+                    Kubernetes核心组件介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../concept/kubernetes_tech_stack.html">
+            
+                <a href="../concept/kubernetes_tech_stack.html">
+            
+                    
+                    Kubernetes容器云平台技术栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    第二章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="kubernetes_install_deploy.html">
+            
+                <a href="kubernetes_install_deploy.html">
+            
+                    
+                    Kubernetes安装与配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="obj.html">
+            
+                <a href="obj.html">
+            
+                    
+                    Kubernetes对象理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3" data-path="affinity_antiaffinity.html">
+            
+                <a href="affinity_antiaffinity.html">
+            
+                    
+                    Kubernetes 亲和性和反亲和性
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../resource_obj/">
+            
+                <a href="../resource_obj/">
+            
+                    
+                    第三章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../resource_obj/Pod_Job.html">
+            
+                <a href="../resource_obj/Pod_Job.html">
+            
+                    
+                    POD和JOB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../resource_obj/namespace.html">
+            
+                <a href="../resource_obj/namespace.html">
+            
+                    
+                    Namespace
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../resource_obj/secret.html">
+            
+                <a href="../resource_obj/secret.html">
+            
+                    
+                    Secret
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../resource_obj/configmap.html">
+            
+                <a href="../resource_obj/configmap.html">
+            
+                    
+                    ConfigMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../resource_obj/volume.html">
+            
+                <a href="../resource_obj/volume.html">
+            
+                    
+                    Volume
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../resource_obj/pv_pvc.html">
+            
+                <a href="../resource_obj/pv_pvc.html">
+            
+                    
+                    PersistentVolume&PersistentVolumeClaim
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../resource_obj/service.html">
+            
+                <a href="../resource_obj/service.html">
+            
+                    
+                    Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../resource_obj/ingress.html">
+            
+                <a href="../resource_obj/ingress.html">
+            
+                    
+                    Ingress
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../resource_obj/replicaset.html">
+            
+                <a href="../resource_obj/replicaset.html">
+            
+                    
+                    ReplicaSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../resource_obj/deployment.html">
+            
+                <a href="../resource_obj/deployment.html">
+            
+                    
+                    Deployment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../resource_obj/daemonset.html">
+            
+                <a href="../resource_obj/daemonset.html">
+            
+                    
+                    DaemonSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../resource_obj/statefulset.html">
+            
+                <a href="../resource_obj/statefulset.html">
+            
+                    
+                    Statefulset
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../develop/">
+            
+                <a href="../develop/">
+            
+                    
+                    第四章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../develop/schedule.html">
+            
+                <a href="../develop/schedule.html">
+            
+                    
+                    Schedule源码学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../develop/client_go.html">
+            
+                <a href="../develop/client_go.html">
+            
+                    
+                    client-go源码学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../bigdata/">
+            
+                <a href="../bigdata/">
+            
+                    
+                    第五章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../bigdata/Elasticsearch_basis.html">
+            
+                <a href="../bigdata/Elasticsearch_basis.html">
+            
+                    
+                    Elasticsearch 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../bigdata/Elasticsearch_deploy.html">
+            
+                <a href="../bigdata/Elasticsearch_deploy.html">
+            
+                    
+                    Elasticsearch 容器化方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../bigdata/MySQL_basia.html">
+            
+                <a href="../bigdata/MySQL_basia.html">
+            
+                    
+                    MySQL 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../bigdata/MySQL_deploy.html">
+            
+                <a href="../bigdata/MySQL_deploy.html">
+            
+                    
+                    MySQL 容器化方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Kubernetes 亲和性和反亲和性</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><b></b>&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;</a></li><ul><li><span class="title-icon "></span><a href="#&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;"><b></b>&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;</a></li><li><span class="title-icon "></span><a href="#pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><b></b>Pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;</a></li></ul></ul></div><a href="#&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><a name="&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;" class="anchor-navigation-ex-anchor" href="#&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;" class="plugin-anchor" href="#&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;</h1>
+<p><strong>nodeSelector</strong> &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5C06; Pod &#x8C03;&#x5EA6;&#x9650;&#x5B9A;&#x5230;&#x5305;&#x542B;&#x7279;&#x5B9A;&#x6807;&#x7B7E;&#x7684;&#x8282;&#x70B9;&#x4E0A;&#x3002;&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;&#xFF08;affinity / anti-affinity&#xFF09;&#x7279;&#x6027;&#x5219;&#x6781;&#x5927;&#x5730;&#x6269;&#x5C55;&#x4E86;&#x9650;&#x5B9A;&#x7684;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x3002;&#x4E3B;&#x8981;&#x7684;&#x589E;&#x5F3A;&#x70B9;&#x5728;&#x4E8E;&#xFF1A;</p>
+<p>&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x66F4;&#x52A0;&#x6709;&#x6548;&#xFF08;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x591A;&#x4E2A;&#x7CBE;&#x786E;&#x5339;&#x914D;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x201C;&#x548C;&#x201D;&#x5173;&#x7CFB;&#xFF09;&#x53EF;&#x4EE5;&#x6807;&#x8BC6;&#x8BE5;&#x89C4;&#x5219;&#x4E3A;&#x201C;soft&#x201D; / &#x201C;preference&#x201D; &#xFF08;&#x8F6F;&#x6027;&#x7684;&#x3001;&#x504F;&#x597D;&#x7684;&#xFF09;&#x800C;&#x4E0D;&#x662F; hard requirement&#xFF08;&#x5FC5;&#x987B;&#x7684;&#xFF09;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x8C03;&#x5EA6;&#x5668;&#x53D1;&#x73B0;&#x8BE5;&#x89C4;&#x5219;&#x4E0D;&#x80FD;&#x88AB;&#x6EE1;&#x8DB3;&#xFF0C;Pod &#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x88AB;&#x8C03;&#x5EA6;
+&#x53EF;&#x4EE5;&#x5BF9;&#x6BD4;&#x8282;&#x70B9;&#x4E0A;&#xFF08;&#x6216;&#x5176;&#x4ED6;&#x62D3;&#x6251;&#x57DF; topological domain&#xFF09;&#x5DF2;&#x8FD0;&#x884C;&#x7684;&#x5176;&#x4ED6; Pod &#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x800C;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x8282;&#x70B9;&#x81EA;&#x5DF1;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x7C7B;&#x4F3C;&#x8FD9;&#x6837;&#x7684;&#x89C4;&#x5219;&#xFF1A;&#x67D0;&#x4E24;&#x7C7B; Pod &#x4E0D;&#x80FD;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF08;&#x6216;&#x62D3;&#x6251;&#x57DF;&#xFF09;&#x4E0A;&#x5171;&#x5B58;</p>
+<p>&#x4F8B;&#x5982;&#x63A7;&#x5236;&#x5668;DaemonSet &#x662F;&#x51B3;&#x5B9A;&#x4E86;POD&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x6BCF;&#x4E2A;&#x53EF;&#x8C03;&#x5EA6;&#x8282;&#x70B9;&#x4E0A;&#x90FD;&#x4FDD;&#x8BC1;&#x8FD0;&#x884C;1&#x4E2A;&#x526F;&#x672C;&#x5B58;&#x3002;&#x4F46;&#x662F;&#x5BF9;&#x4E8E;DeployMent&#x3001;ReplicatSet&#x3001;StatefulSet&#x3002;&#x8FD9;&#x79CD;&#x662F;&#x4FDD;&#x8BC1;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x8C03;&#x5EA6;&#x8282;&#x70B9;&#x4E0A;&#x8FD0;&#x884C;&#x4E00;&#x5B9A;&#x6570;&#x91CF;Rplicas&#x7684;Pod&#x3002;&#x5BF9;&#x4E8E;&#x53EA;&#x60F3;&#x5728;&#x6EE1;&#x8DB3;&#x9650;&#x5236;&#x6761;&#x4EF6;&#x7684;&#x8282;&#x70B9;&#x4E0A;&#x4E14;&#x8FD0;&#x884C;&#x4E00;&#x4E2A;POD&#x90A3;&#x4E48;&#x4E45;&#x9700;&#x8981;&#x7528;&#x5230;Pod&#x7684;&#x53CD;&#x4EB2;&#x548C;&#x6765;&#x5B9E;&#x73B0;&#x3002;</p>
+<h2 id="&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;"><a name="&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;" class="anchor-navigation-ex-anchor" href="#&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;" class="plugin-anchor" href="#&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;</h2>
+<p>&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;&#xFF08;node affinity&#xFF09;&#x7684;&#x6982;&#x5FF5;&#x4E0E; nodeSelector &#x76F8;&#x4F3C;&#xFF0C;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x8282;&#x70B9;&#x7684;&#x6807;&#x7B7E;&#x6765;&#x9650;&#x5B9A; Pod &#x53EF;&#x4EE5;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x54EA;&#x4E9B;&#x8282;&#x70B9;&#x4E0A;&#x3002;</p>
+<p>&#x5F53;&#x524D;&#x652F;&#x6301;&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;&#xFF1A;</p>
+<ul>
+<li><p><strong>requiredDuringSchedulingIgnoredDuringExecution</strong> &#xFF08;hard&#xFF0C;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#x6B64;&#x6761;&#x4EF6; </p>
+</li>
+<li><p><strong>preferredDuringSchedulingIgnoredDuringExecution</strong> &#xFF08;soft&#xFF0C;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x6700;&#x597D;&#x80FD;&#x6EE1;&#x8DB3;&#x6B64;&#x6761;&#x4EF6;&#xFF09;&#x3002;</p>
+</li>
+</ul>
+<p>&#x540D;&#x5B57;&#x4E2D; <strong>IgnoredDuringExecution</strong> &#x610F;&#x5473;&#x7740;&#xFF1A;&#x5982;&#x679C; Pod &#x5DF2;&#x7ECF;&#x8C03;&#x5EA6;&#x5230;&#x8282;&#x70B9;&#x4E0A;&#x4EE5;&#x540E;&#xFF0C;&#x8282;&#x70B9;&#x7684;&#x6807;&#x7B7E;&#x53D1;&#x751F;&#x6539;&#x53D8;&#xFF0C;&#x4F7F;&#x5F97;&#x8282;&#x70B9;&#x5DF2;&#x7ECF;&#x4E0D;&#x518D;&#x5339;&#x914D;&#x8BE5;&#x4EB2;&#x548C;&#x6027;&#x89C4;&#x5219;&#x4E86;&#xFF0C;Pod &#x4ECD;&#x5C06;&#x7EE7;&#x7EED;&#x5728;&#x8282;&#x70B9;&#x4E0A;&#x6267;&#x884C;&#xFF08;&#x8FD9;&#x4E00;&#x70B9;&#x4E0E; <strong>nodeSelector</strong> &#x76F8;&#x4F3C;&#xFF09;&#x3002;&#x5C06;&#x6765;&#xFF0C;Kubernetes &#x5C06;&#x4F1A;&#x63D0;&#x4F9B; requiredDuringSchedulingRequiredDuringExecution &#x8FD9;&#x4E2A;&#x9009;&#x9879;&#xFF0C;&#x8BE5;&#x9009;&#x9879;&#x4E0E; requiredDuringSchedulingIgnoredDuringExecution &#x76F8;&#x4F3C;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x5F53;&#x8282;&#x70B9;&#x7684;&#x6807;&#x7B7E;&#x4E0D;&#x5728;&#x5339;&#x914D;&#x4EB2;&#x548C;&#x6027;&#x89C4;&#x5219;&#x4E4B;&#x540E;&#xFF0C;Pod &#x5C06;&#x88AB;&#x4ECE;&#x8282;&#x70B9;&#x4E0A;&#x9A71;&#x9010;&#x3002;</p>
+<p>requiredDuringSchedulingIgnoredDuringExecution &#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x662F;&#xFF0C;&#x53EA;&#x5728; Intel CPU &#x4E0A;&#x8FD0;&#x884C;&#x8BE5; Pod&#xFF0C;preferredDuringSchedulingIgnoredDuringExecution &#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x662F;&#xFF0C;&#x5C3D;&#x91CF;&#x5728;&#x9AD8;&#x53EF;&#x7528;&#x533A; XYZ &#x4E2D;&#x8FD0;&#x884C;&#x8FD9;&#x4E2A; Pod&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x505A;&#x4E0D;&#x5230;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x8FD0;&#x884C;&#x8BE5; Pod&#x3002;</p>
+<p><strong>&#x6CE8;&#xFF1A;</strong> &#x5982;&#x679C;&#x67D0;&#x4E2A; Pod &#x540C;&#x65F6;&#x6307;&#x5B9A;&#x4E86; nodeSelector &#x548C; nodeAffinity&#xFF0C;&#x5219;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x5FC5;&#x987B;&#x540C;&#x65F6;&#x6EE1;&#x8DB3;&#x4E24;&#x4E2A;&#x6761;&#x4EF6;&#xFF0C;&#x624D;&#x80FD;&#x5C06; Pod &#x8C03;&#x5EA6;&#x5230;&#x8BE5;&#x8282;&#x70B9;&#x4E0A;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E3A; nodeAffinity &#x6307;&#x5B9A;&#x591A;&#x4E2A; nodeSelectorTerms&#xFF0C;&#x5219;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x53EA;&#x9700;&#x8981;&#x6EE1;&#x8DB3;&#x4EFB;&#x610F;&#x4E00;&#x4E2A; nodeSelectorTerms &#x7684;&#x8981;&#x6C42;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5C06; Pod &#x8C03;&#x5EA6;&#x5230;&#x8BE5;&#x8282;&#x70B9;&#x4E0A;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E3A; nodeSelectorTerms &#x6307;&#x5B9A;&#x591A;&#x4E2A; matchExpressions&#xFF0C;&#x5219;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#x6240;&#x6709;&#x7684; matchExpressions &#x7684;&#x8981;&#x6C42;&#xFF0C;&#x624D;&#x80FD;&#x5C06; Pod &#x8C03;&#x5EA6;&#x5230;&#x8BE5;&#x8282;&#x70B9;&#x4E0A;&#x3002;</p>
+<p>&#x5F53; Pod &#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x67D0;&#x8282;&#x70B9;&#x4E0A;&#x4E4B;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x79FB;&#x9664;&#x6216;&#x8005;&#x4FEE;&#x6539;&#x8282;&#x70B9;&#x7684;&#x6807;&#x7B7E;&#xFF0C;Pod &#x5C06;&#x4ECD;&#x7136;&#x7EE7;&#x7EED;&#x5728;&#x8282;&#x70B9;&#x4E0A;&#x8FD0;&#x884C;&#x3002;&#x6362;&#x53E5;&#x8BDD;&#x8BF4;&#xFF0C;&#x8282;&#x70B9;&#x4EB2;&#x548C;&#x6027;&#x89C4;&#x5219;&#x53EA;&#x5728;&#x8C03;&#x5EA6;&#x8BE5; Pod &#x65F6;&#x53D1;&#x751F;&#x4F5C;&#x7528;&#x3002;</p>
+<p><strong>&#x793A;&#x4F8B;&#x8BF4;&#x660E;&#xFF1A;</strong></p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/appmanager
+            operator: In
+            values:
+            - true
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: another-node-label-key
+            operator: In
+            values:
+            - another-node-label-value
+  containers:
+  - name: node-affinity
+    image: docker.io/busybox:latest
+</code></pre><p>&#x6B64;&#x5904;&#x7684;&#x4EB2;&#x548C;&#x6027;&#x89C4;&#x5219;&#x8868;&#x660E;&#xFF0C;&#x8BE5; Pod &#x53EA;&#x80FD;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x5305;&#x542B; key &#x4E3A; kubernetes.io/appmanager &#x4E14; value &#x4E3A; true  &#x7684;&#x6807;&#x7B7E;&#x7684;&#x8282;&#x70B9;&#x4E0A;&#x3002;&#x6B64;&#x5916;&#xFF0C;&#x5982;&#x679C;&#x8282;&#x70B9;&#x5DF2;&#x7ECF;&#x6EE1;&#x8DB3;&#x4E86;&#x524D;&#x8FF0;&#x6761;&#x4EF6;&#xFF0C;&#x5C06;&#x4F18;&#x5148;&#x9009;&#x62E9;&#x5305;&#x542B; key &#x4E3A; another-node-label-key &#x4E14; value &#x4E3A; another-node-label-value &#x7684;&#x6807;&#x7B7E;&#x7684;&#x8282;&#x70B9;&#x3002;</p>
+<h2 id="pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><a name="pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;" class="anchor-navigation-ex-anchor" href="#pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;" class="plugin-anchor" href="#pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>Pod&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;</h2>
+<p>Pod&#x4E4B;&#x95F4;&#x7684;&#x4EB2;&#x548C;&#x6027;&#x4E0E;&#x53CD;&#x4EB2;&#x548C;&#x6027;&#xFF08;inter-pod affinity and anti-affinity&#xFF09;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x5728;&#x8282;&#x70B9;&#x4E0A;&#x7684; Pod &#x7684;&#x6807;&#x7B7E;&#xFF08;&#x800C;&#x4E0D;&#x662F;&#x8282;&#x70B9;&#x7684;&#x6807;&#x7B7E;&#xFF09;&#x6765;&#x9650;&#x5B9A; Pod &#x53EF;&#x4EE5;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x54EA;&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x3002;&#x6B64;&#x7C7B;&#x89C4;&#x5219;&#x7684;&#x8868;&#x73B0;&#x5F62;&#x5F0F;&#x662F;</p>
+<p><strong>&#x793A;&#x4F8B;&#x8BF4;&#x660E;&#xFF1A;</strong></p>
+<pre><code>apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: pod-antiaffinity
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: pod-antiaffinity
+  template:
+    metadata:
+      labels:
+        app: pod-antiaffinity
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - pod-antiaffinity
+              topologyKey: &quot;kubernetes.io/hostname&quot;
+      containers:
+        - name: pod-antiaffinity
+          image: docker.io/busybox:latest
+          command: [&quot;sh&quot;, &quot;-c&quot;, &quot;sleep  3600&quot;]
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: 1
+      nodeSelector:
+        kubernetes.io/appmanager: &quot;true&quot;
+</code></pre><p>&#x7B14;&#x8005;&#x6B64;&#x5904;&#x4E3E;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x4F8B;&#x5B50;&#x7684;&#x573A;&#x666F;&#x3002;Pod&#x63A7;&#x5236;&#x5668;ReplicaSet&#x662F;&#x4FDD;&#x8BC1;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x542F;&#x52A8;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x7684;Pod&#x3002;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x53C8;&#x4E0D;&#x60F3;&#x8BA9;&#x5176;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x542F;&#x52A8;&#x591A;&#x4E2A;&#x526F;&#x672C;&#xFF0C;&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x7528;Pod&#x53CD;&#x4EB2;&#x548C;&#x6027;&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x89E3;&#x51B3;&#xFF0C;&#x5982;&#x4E0A;&#x8FF0;&#x4F8B;&#x5B50;&#x3002;</p>
+<ul>
+<li>Pod &#x53CD;&#x4EB2;&#x548C;&#x6027;&#x89C4;&#x5219;&#x8981;&#x6C42;&#xFF0C;&#x8BE5; Pod &#x6700;&#x597D;&#x4E0D;&#x8981;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x4E86;&#x5305;&#x542B; key &#x4E3A; app &#x4E14; value &#x4E3A; pod-antiaffinity &#x7684;&#x6807;&#x7B7E;&#x7684; Pod &#x7684;&#x8282;&#x70B9;&#x4E0A;&#xFF0C;&#x6216;&#x8005;&#x66F4;&#x51C6;&#x786E;&#x5730;&#x8BF4;&#xFF0C;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#x5982;&#x4E0B;&#x6761;&#x4EF6;&#xFF1A;<ul>
+<li>&#x5982;&#x679C; topologyKey &#x662F; kubernetes.io/hostname&#xFF0C;&#x5219;&#xFF0C;Pod&#x4E0D;&#x80FD;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x540C;&#x4E00;&#x4E2A; zone &#x4E2D;&#x7684;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x4E86;&#x5305;&#x542B;&#x6807;&#x7B7E; app: pod-antiaffinity &#x7684;&#x8282;&#x70B9;&#x4E0A;&#x3002;</li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="obj.html" class="navigation navigation-prev " aria-label="Previous page: Kubernetes对象理解">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../resource_obj/" class="navigation navigation-next " aria-label="Next page: 第三章">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Kubernetes 亲和性和反亲和性","level":"1.4.3","depth":2,"next":{"title":"第三章","level":"1.5","depth":1,"path":"resource_obj/README.md","ref":"resource_obj/README.md","articles":[{"title":"POD和JOB","level":"1.5.1","depth":2,"path":"resource_obj/Pod_Job.md","ref":"resource_obj/Pod_Job.md","articles":[]},{"title":"Namespace","level":"1.5.2","depth":2,"path":"resource_obj/namespace.md","ref":"resource_obj/namespace.md","articles":[]},{"title":"Secret","level":"1.5.3","depth":2,"path":"resource_obj/secret.md","ref":"resource_obj/secret.md","articles":[]},{"title":"ConfigMap","level":"1.5.4","depth":2,"path":"resource_obj/configmap.md","ref":"resource_obj/configmap.md","articles":[]},{"title":"Volume","level":"1.5.5","depth":2,"path":"resource_obj/volume.md","ref":"resource_obj/volume.md","articles":[]},{"title":"PersistentVolume&PersistentVolumeClaim","level":"1.5.6","depth":2,"path":"resource_obj/pv_pvc.md","ref":"resource_obj/pv_pvc.md","articles":[]},{"title":"Service","level":"1.5.7","depth":2,"path":"resource_obj/service.md","ref":"resource_obj/service.md","articles":[]},{"title":"Ingress","level":"1.5.8","depth":2,"path":"resource_obj/ingress.md","ref":"resource_obj/ingress.md","articles":[]},{"title":"ReplicaSet","level":"1.5.9","depth":2,"path":"resource_obj/replicaset.md","ref":"resource_obj/replicaset.md","articles":[]},{"title":"Deployment","level":"1.5.10","depth":2,"path":"resource_obj/deployment.md","ref":"resource_obj/deployment.md","articles":[]},{"title":"DaemonSet","level":"1.5.11","depth":2,"path":"resource_obj/daemonset.md","ref":"resource_obj/daemonset.md","articles":[]},{"title":"Statefulset","level":"1.5.12","depth":2,"path":"resource_obj/statefulset.md","ref":"resource_obj/statefulset.md","articles":[]}]},"previous":{"title":"Kubernetes对象理解","level":"1.4.2","depth":2,"path":"setup/obj.md","ref":"setup/obj.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","splitter","expandable-chapters-small","anchors","github","github-buttons","donate","sharing-plus","anchor-navigation-ex","favicon"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"github":{"url":"https://github.com/FrederickHou/Kubernetes-notes"},"splitter":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"","alipayText":"支付宝打赏","button":"赞赏","title":"","wechat":"https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true","wechatText":""},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"favicon":{"shortcut":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","bookmark":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","appleTouch":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","appleTouchMore":{"120x120":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","180x180":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png"}},"github-buttons":{"buttons":[{"user":"frederickhou","repo":"Kubernetes-notes","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"sharing":{"facebook":false,"qq":false,"qzone":false,"twitter":false,"weibo":false,"all":["facebook","weibo","twitter","qq","qzone"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"Frederick hou","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Kubernetes 学习笔记","language":"zh-hans","links":{"sidebar":{"我的博客":"https://www.frederickhou.com"}},"gitbook":"3.2.3","description":"在成为极客的路上"},"file":{"path":"setup/affinity_antiaffinity.md","mtime":"2020-04-02T06:34:10.171Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T06:36:07.612Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

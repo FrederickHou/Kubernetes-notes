@@ -1,0 +1,486 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Heketi调用封装 · Golang 学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Frederick hou">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="heketi_deploy_introduce.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png'>
+    
+    
+        
+        <link rel="apple-touch-icon" sizes="120x120" href="../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png">
+        
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"frederickhou","repo":"Golang-notes","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://www.frederickhou.com" target="_blank" class="custom-link">我的博客</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Heketi
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="heketi_deploy_introduce.html">
+            
+                <a href="heketi_deploy_introduce.html">
+            
+                    
+                    Heketi开发介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="heketi_deploy.html">
+            
+                <a href="heketi_deploy.html">
+            
+                    
+                    Heketi调用封装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Heketi调用封装</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;"><b></b>Heketi &#x8C03;&#x7528;&#x5C01;&#x88C5;</a></li><ul><ul><li><span class="title-icon "></span><a href="#&#x5305;&#x4F9D;&#x8D56;"><b></b>&#x5305;&#x4F9D;&#x8D56;</a></li><li><span class="title-icon "></span><a href="#heketi&#x5C5E;&#x6027;"><b></b>Heketi&#x5C5E;&#x6027;</a></li><li><span class="title-icon "></span><a href="#&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;"><b></b>&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;</a></li><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;"><b></b>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;</a></li><li><span class="title-icon "></span><a href="#&#x96C6;&#x7FA4;id&#x5217;&#x8868;&#x8FD4;&#x56DE;"><b></b>&#x96C6;&#x7FA4;ID&#x5217;&#x8868;&#x8FD4;&#x56DE;</a></li><li><span class="title-icon "></span><a href="#&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><b></b>&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;</a></li><li><span class="title-icon "></span><a href="#&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;"><b></b>&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</a></li><li><span class="title-icon "></span><a href="#&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;"><b></b>&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;</a></li><li><span class="title-icon "></span><a href="#&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;"><b></b>&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;</a></li><li><span class="title-icon "></span><a href="#&#x5377;&#x5220;&#x9664;"><b></b>&#x5377;&#x5220;&#x9664;</a></li><li><span class="title-icon "></span><a href="#&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><b></b>&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;</a></li><li><span class="title-icon "></span><a href="#&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;"><b></b>&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;</a></li></ul></ul></ul></div><a href="#heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;"><a name="heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;" class="anchor-navigation-ex-anchor" href="#heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;" class="plugin-anchor" href="#heketi-&#x8C03;&#x7528;&#x5C01;&#x88C5;"><i class="fa fa-link" aria-hidden="true"></i></a>Heketi &#x8C03;&#x7528;&#x5C01;&#x88C5;</h1>
+<h3 id="&#x5305;&#x4F9D;&#x8D56;"><a name="&#x5305;&#x4F9D;&#x8D56;" class="anchor-navigation-ex-anchor" href="#&#x5305;&#x4F9D;&#x8D56;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5305;&#x4F9D;&#x8D56;" class="plugin-anchor" href="#&#x5305;&#x4F9D;&#x8D56;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5305;&#x4F9D;&#x8D56;</h3>
+<pre><code>import (
+    &quot;fmt&quot;
+    &quot;errors&quot;
+    client&quot;github.com/heketi/heketi/client/api/go-client&quot;
+    api&quot;github.com/heketi/heketi/pkg/glusterfs/api&quot;
+)
+</code></pre><h3 id="heketi&#x5C5E;&#x6027;"><a name="heketi&#x5C5E;&#x6027;" class="anchor-navigation-ex-anchor" href="#heketi&#x5C5E;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="heketi&#x5C5E;&#x6027;" class="plugin-anchor" href="#heketi&#x5C5E;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>Heketi&#x5C5E;&#x6027;</h3>
+<pre><code>type Heketi struct{
+    Url string
+    User string
+    Key string
+    ClientObj *client.Client
+}
+</code></pre><h3 id="&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;"><a name="&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;" class="anchor-navigation-ex-anchor" href="#&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;" class="plugin-anchor" href="#&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x5316;&#x63A5;&#x53E3;</h3>
+<pre><code>func(self *Heketi)NewClient(){
+    // Create a client object
+    clientObj := client.NewClient(self.Url, self.User, self.Key)
+    self.ClientObj = clientObj
+}
+</code></pre><h3 id="&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;"><a name="&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;" class="plugin-anchor" href="#&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x63A5;&#x53E3;</h3>
+<pre><code>func(self *Heketi)CreateCluster(block bool,file bool)(string,error){
+    // create a cluster
+    clusterCreateReq := &amp;api.ClusterCreateRequest{}
+    clusterCreateReq.ClusterFlags.Block = true
+    clusterCreateReq.ClusterFlags.File = true
+    clusterInfoRep,err := self.ClientObj.ClusterCreate(clusterCreateReq)
+    return clusterInfoRep.Id,err
+}
+</code></pre><h3 id="&#x96C6;&#x7FA4;id&#x5217;&#x8868;&#x8FD4;&#x56DE;"><a name="&#x96C6;&#x7FA4;id&#x5217;&#x8868;&#x8FD4;&#x56DE;" class="anchor-navigation-ex-anchor" href="#&#x96C6;&#x7FA4;id&#x5217;&#x8868;&#x8FD4;&#x56DE;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x96C6;&#x7FA4;id&#x5217;&#x8868;&#x8FD4;&#x56DE;" class="plugin-anchor" href="#&#x96C6;&#x7FA4;id&#x5217;&#x8868;&#x8FD4;&#x56DE;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x96C6;&#x7FA4;ID&#x5217;&#x8868;&#x8FD4;&#x56DE;</h3>
+<pre><code>func(self *Heketi)ClusterList()([]string,error){
+    // Get  cluster list
+    clusterListRes,err := self.ClientObj.ClusterList()
+    if err != nil{
+        return nil,err
+    }
+    if len((*clusterListRes).Clusters) == 0{
+        fmt.Println(&quot;don&apos;t have a cluster&quot;)
+        return []string{},errors.New(&quot;don&apos;t have a cluster&quot;)
+    }
+    clusterList := (*clusterListRes).Clusters
+    return clusterList,nil
+}
+</code></pre><h3 id="&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><a name="&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;" class="anchor-navigation-ex-anchor" href="#&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;" class="plugin-anchor" href="#&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x83B7;&#x53D6;</h3>
+<pre><code>func(self *Heketi)ClusterInfo(clusterId string)([]string,[]string,[]string,error){
+    clusterInfoRes,err := self.ClientObj.ClusterInfo(clusterId)
+    return clusterInfoRes.Nodes,clusterInfoRes.Volumes ,clusterInfoRes.BlockVolumes ,err
+}
+</code></pre><h3 id="&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;"><a name="&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;" class="anchor-navigation-ex-anchor" href="#&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;" class="plugin-anchor" href="#&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x96C6;&#x7FA4;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</h3>
+<pre><code>func(self *Heketi)AddNode(clusterId string,zone int,hostnameManage []string,hostnamesStorage []string,Tags map[string]string)(*api.NodeInfoResponse,error){
+    // Create node
+    nodeReq := &amp;api.NodeAddRequest{}
+    nodeReq.ClusterId = clusterId
+    nodeReq.Hostnames.Manage = []string{&quot;cent&quot; + fmt.Sprintf(&quot;%v&quot;, zone)}
+    nodeReq.Hostnames.Storage = []string{&quot;storage&quot; + fmt.Sprintf(&quot;%v&quot;, zone)}
+    nodeReq.Zone = zone + 1
+    nodeReq.Tags = Tags
+    // Add node
+    node, err := self.ClientObj.NodeAdd(nodeReq)
+    return node ,err
+}
+</code></pre><h3 id="&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;"><a name="&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;" class="anchor-navigation-ex-anchor" href="#&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;" class="plugin-anchor" href="#&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7ED9;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8BBE;&#x5907;</h3>
+<pre><code>func(self *Heketi)AddDevice(nodeId string, deviceName string)(bool,error){
+        // add device
+        deviceReq := &amp;api.DeviceAddRequest{}
+        deviceReq.Name = deviceName
+        deviceReq.NodeId = nodeId
+        err := self.ClientObj.DeviceAdd(deviceReq)
+        if err != nil{
+            return false,err
+        }
+        return true,nil
+}
+</code></pre><h3 id="&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;"><a name="&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;" class="anchor-navigation-ex-anchor" href="#&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;" class="plugin-anchor" href="#&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5377;</h3>
+<pre><code>func(self *Heketi)VolumeCreate(size int,name string,replica int,clustersIdList []string,block bool)(string,error){
+    volumeCreateReq := &amp;api.VolumeCreateRequest{} 
+    volumeCreateReq.Size = size
+    volumeCreateReq.Clusters = clustersIdList
+    volumeCreateReq.Name = name
+    volumeCreateReq.Block  = block
+    volumeCreateReq.Durability.Replicate.Replica = replica
+    volumeInfoRes := &amp;api.VolumeInfoResponse{}
+    volumeInfoRes,err := self.ClientObj.VolumeCreate(volumeCreateReq)
+    return volumeInfoRes.VolumeInfo.Id,err
+}
+</code></pre><h3 id="&#x5377;&#x5220;&#x9664;"><a name="&#x5377;&#x5220;&#x9664;" class="anchor-navigation-ex-anchor" href="#&#x5377;&#x5220;&#x9664;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5377;&#x5220;&#x9664;" class="plugin-anchor" href="#&#x5377;&#x5220;&#x9664;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5377;&#x5220;&#x9664;</h3>
+<pre><code>func(self *Heketi)VolumeDelete(id string)(error){
+    return self.ClientObj.VolumeDelete(id)
+}
+</code></pre><h3 id="&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><a name="&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;" class="anchor-navigation-ex-anchor" href="#&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;" class="plugin-anchor" href="#&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5377;&#x4FE1;&#x606F;&#x83B7;&#x53D6;</h3>
+<pre><code>func(self *Heketi)VolumeInfo(id string){
+    info,_ := self.ClientObj.VolumeInfo(id)
+    fmt.Println(info)
+}
+</code></pre><h3 id="&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;"><a name="&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;" class="anchor-navigation-ex-anchor" href="#&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;" class="plugin-anchor" href="#&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7EC6;&#x8282;</h3>
+<pre><code>func(self *Heketi)GetClusterInfoDetail(clusterId string)(map[string]interface{}){
+
+    /*
+        {
+            &quot;ClusterId&quot;:&quot;&quot;,
+            &quot;ClusterInfo&quot;:[
+                {
+                    &quot;NodeName&quot;:&quot;&quot;,
+                    &quot;NodeId&quot;:&quot;&quot;,
+                    &quot;NodeState&quot;:&quot;&quot;,
+                    &quot;DevideInfo&quot;:[
+                    {
+                        &quot;DeviceId&quot;:&quot;&quot;,
+                        &quot;DeviceName&quot;:&quot;&quot;,
+                        &quot;DeviceState&quot;:&quot;&quot;,
+                        &quot;DeviceTotal&quot;:0,
+                        &quot;DeviceUsed&quot;:0,
+                        &quot;DeviceFree&quot;:0,
+                    }
+                ]
+                }
+            ]
+        }
+    */
+    clusterInfo,_ := self.ClientObj.ClusterInfo(clusterId)
+    clusterInfoDetailMap := map[string]interface{}{}
+    var nodeList  []interface{}
+    clusterInfoDetailMap[&quot;ClusterId&quot;] = clusterId
+    //select  cluster&apos;s node
+    for _,node:= range clusterInfo.Nodes {
+        nodeInfoRes ,_:= self.ClientObj.NodeInfo(node) 
+        var newdDviceInfoList  []interface{}
+        newNodeInfo := map[string]interface{}{}
+        newNodeInfo[&quot;NodeState&quot;] = (*nodeInfoRes).State
+        newNodeInfo[&quot;NodeId&quot;] = (*nodeInfoRes).NodeInfo.Id
+        newNodeInfo[&quot;NodeName&quot;] = (*nodeInfoRes).NodeInfo.NodeAddRequest.Hostnames.Manage
+        devicesInfoResList := (*nodeInfoRes).DevicesInfo   
+        for _,deviceInfoRes := range devicesInfoResList{
+            deviceInfo := map[string]interface{}{}
+            deviceInfo[&quot;DeviceId&quot;] = deviceInfoRes.DeviceInfo.Id
+            deviceInfo[&quot;DeviceName&quot;] = deviceInfoRes.DeviceInfo.Device.Name
+            deviceInfo[&quot;DeviceUsed&quot;] = deviceInfoRes.DeviceInfo.Storage.Used
+            deviceInfo[&quot;DeviceFree&quot;] = deviceInfoRes.DeviceInfo.Storage.Free
+            deviceInfo[&quot;DeviceTotal&quot;] = deviceInfoRes.DeviceInfo.Storage.Total 
+            deviceInfo[&quot;DeviceState&quot;] = deviceInfoRes.State
+            newdDviceInfoList = append(newdDviceInfoList,deviceInfo)
+            newNodeInfo[&quot;DevideInfo&quot;] = newdDviceInfoList                                            
+        }
+        nodeList = append(nodeList,newNodeInfo)
+    }
+    clusterInfoDetailMap[&quot;ClusterInfo&quot;] = nodeList
+    return clusterInfoDetailMap
+}
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="heketi_deploy_introduce.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Heketi开发介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Heketi调用封装","level":"1.2.2","depth":2,"previous":{"title":"Heketi开发介绍","level":"1.2.1","depth":2,"path":"heketi/heketi_deploy_introduce.md","ref":"heketi/heketi_deploy_introduce.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","splitter","expandable-chapters-small","anchors","github","github-buttons","donate","sharing-plus","anchor-navigation-ex","favicon"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"github":{"url":"https://github.com/FrederickHou/Golang-notes"},"splitter":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"","alipayText":"支付宝打赏","button":"赞赏","title":"","wechat":"https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true","wechatText":""},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"favicon":{"shortcut":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","bookmark":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","appleTouch":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","appleTouchMore":{"120x120":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","180x180":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png"}},"github-buttons":{"buttons":[{"user":"frederickhou","repo":"Golang-notes","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"sharing":{"facebook":false,"qq":false,"qzone":false,"twitter":false,"weibo":false,"all":["facebook","weibo","twitter","qq","qzone"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"Frederick hou","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Golang 学习笔记","language":"zh-hans","links":{"sidebar":{"我的博客":"https://www.frederickhou.com"}},"gitbook":"3.2.3","description":"在成为极客的路上"},"file":{"path":"heketi/heketi_deploy.md","mtime":"2020-03-18T05:51:09.873Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-19T06:00:55.253Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

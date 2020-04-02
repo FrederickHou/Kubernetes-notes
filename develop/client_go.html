@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>第一章 · Kubernetes 学习笔记</title>
+        <title>client-go源码学习 · Kubernetes 学习笔记</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -69,10 +69,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="kubernetes_fundation.html" />
+    <link rel="next" href="../bigdata/" />
     
     
-    <link rel="prev" href="../intruduce.html" />
+    <link rel="prev" href="schedule.html" />
     
 
     
@@ -164,9 +164,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="./">
+        <li class="chapter " data-level="1.3" data-path="../concept/">
             
-                <a href="./">
+                <a href="../concept/">
             
                     
                     第一章
@@ -178,9 +178,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="kubernetes_fundation.html">
+        <li class="chapter " data-level="1.3.1" data-path="../concept/kubernetes_fundation.html">
             
-                <a href="kubernetes_fundation.html">
+                <a href="../concept/kubernetes_fundation.html">
             
                     
                     Kubernetes基本概念
@@ -191,9 +191,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="kubernetes_compoent.html">
+        <li class="chapter " data-level="1.3.2" data-path="../concept/kubernetes_compoent.html">
             
-                <a href="kubernetes_compoent.html">
+                <a href="../concept/kubernetes_compoent.html">
             
                     
                     Kubernetes核心组件介绍
@@ -204,9 +204,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="kubernetes_tech_stack.html">
+        <li class="chapter " data-level="1.3.3" data-path="../concept/kubernetes_tech_stack.html">
             
-                <a href="kubernetes_tech_stack.html">
+                <a href="../concept/kubernetes_tech_stack.html">
             
                     
                     Kubernetes容器云平台技术栈
@@ -455,9 +455,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="../develop/">
+        <li class="chapter " data-level="1.6" data-path="./">
             
-                <a href="../develop/">
+                <a href="./">
             
                     
                     第四章
@@ -469,9 +469,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.6.1" data-path="../develop/schedule.html">
+        <li class="chapter " data-level="1.6.1" data-path="schedule.html">
             
-                <a href="../develop/schedule.html">
+                <a href="schedule.html">
             
                     
                     Schedule源码学习
@@ -482,9 +482,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.2" data-path="../develop/client_go.html">
+        <li class="chapter active" data-level="1.6.2" data-path="client_go.html">
             
-                <a href="../develop/client_go.html">
+                <a href="client_go.html">
             
                     
                     client-go源码学习
@@ -601,7 +601,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >第一章</a>
+        <a href=".." >client-go源码学习</a>
     </h1>
 </div>
 
@@ -616,8 +616,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#kubernetes-&#x57FA;&#x7840;&#x7BC7;"><b></b>Kubernetes &#x57FA;&#x7840;&#x7BC7;</a></li></ul></div><a href="#kubernetes-&#x57FA;&#x7840;&#x7BC7;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="kubernetes-&#x57FA;&#x7840;&#x7BC7;"><a name="kubernetes-&#x57FA;&#x7840;&#x7BC7;" class="anchor-navigation-ex-anchor" href="#kubernetes-&#x57FA;&#x7840;&#x7BC7;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="kubernetes-&#x57FA;&#x7840;&#x7BC7;" class="plugin-anchor" href="#kubernetes-&#x57FA;&#x7840;&#x7BC7;"><i class="fa fa-link" aria-hidden="true"></i></a>Kubernetes &#x57FA;&#x7840;&#x7BC7;</h1>
-<p>&#x672C;&#x7BC7;&#x4EE5;Kubernetes&#x57FA;&#x7840;&#x6982;&#x5FF5;&#xFF0C;&#x4EE5;&#x53CA;&#x76F8;&#x5173;Kubernetes&#x6838;&#x5FC3;&#x7EC4;&#x4EF6;&#x4ECB;&#x7ECD;&#x4E3A;&#x4E3B;&#xFF0C;&#x4EE5;&#x53CA;&#x6D89;&#x53CA;&#x5230;&#x7684;&#x76F8;&#x5173;Kubernetes&#x6280;&#x672F;&#x6808;&#x3002;</p>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;"><b></b>client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;</a></li></ul></div><a href="#client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;"><a name="client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;" class="anchor-navigation-ex-anchor" href="#client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;" class="plugin-anchor" href="#client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;"><i class="fa fa-link" aria-hidden="true"></i></a>client-go&#x6E90;&#x7801;&#x5B66;&#x4E60;</h1>
 
                                 
                                 </section>
@@ -645,12 +644,12 @@
 
             
                 
-                <a href="../intruduce.html" class="navigation navigation-prev " aria-label="Previous page: 前言">
+                <a href="schedule.html" class="navigation navigation-prev " aria-label="Previous page: Schedule源码学习">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="kubernetes_fundation.html" class="navigation navigation-next " aria-label="Next page: Kubernetes基本概念">
+                <a href="../bigdata/" class="navigation navigation-next " aria-label="Next page: 第五章">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -661,7 +660,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第一章","level":"1.3","depth":1,"next":{"title":"Kubernetes基本概念","level":"1.3.1","depth":2,"path":"concept/kubernetes_fundation.md","ref":"concept/kubernetes_fundation.md","articles":[]},"previous":{"title":"前言","level":"1.2","depth":1,"path":"intruduce.md","ref":"intruduce.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","splitter","expandable-chapters-small","anchors","github","github-buttons","donate","sharing-plus","anchor-navigation-ex","favicon"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"github":{"url":"https://github.com/FrederickHou/Kubernetes-notes"},"splitter":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"","alipayText":"支付宝打赏","button":"赞赏","title":"","wechat":"https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true","wechatText":""},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"favicon":{"shortcut":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","bookmark":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","appleTouch":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","appleTouchMore":{"120x120":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","180x180":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png"}},"github-buttons":{"buttons":[{"user":"frederickhou","repo":"Kubernetes-notes","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"sharing":{"facebook":false,"qq":false,"qzone":false,"twitter":false,"weibo":false,"all":["facebook","weibo","twitter","qq","qzone"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"Frederick hou","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Kubernetes 学习笔记","language":"zh-hans","links":{"sidebar":{"我的博客":"https://www.frederickhou.com"}},"gitbook":"3.2.3","description":"在成为极客的路上"},"file":{"path":"concept/README.md","mtime":"2020-04-02T05:13:01.208Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T06:36:07.612Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"client-go源码学习","level":"1.6.2","depth":2,"next":{"title":"第五章","level":"1.7","depth":1,"path":"bigdata/README.md","ref":"bigdata/README.md","articles":[{"title":"Elasticsearch 基础","level":"1.7.1","depth":2,"path":"bigdata/Elasticsearch_basis.md","ref":"bigdata/Elasticsearch_basis.md","articles":[]},{"title":"Elasticsearch 容器化方案","level":"1.7.2","depth":2,"path":"bigdata/Elasticsearch_deploy.md","ref":"bigdata/Elasticsearch_deploy.md","articles":[]},{"title":"MySQL 基础","level":"1.7.3","depth":2,"path":"bigdata/MySQL_basia.md","ref":"bigdata/MySQL_basia.md","articles":[]},{"title":"MySQL 容器化方案","level":"1.7.4","depth":2,"path":"bigdata/MySQL_deploy.md","ref":"bigdata/MySQL_deploy.md","articles":[]}]},"previous":{"title":"Schedule源码学习","level":"1.6.1","depth":2,"path":"develop/schedule.md","ref":"develop/schedule.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","splitter","expandable-chapters-small","anchors","github","github-buttons","donate","sharing-plus","anchor-navigation-ex","favicon"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"github":{"url":"https://github.com/FrederickHou/Kubernetes-notes"},"splitter":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"","alipayText":"支付宝打赏","button":"赞赏","title":"","wechat":"https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true","wechatText":""},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"favicon":{"shortcut":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","bookmark":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","appleTouch":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","appleTouchMore":{"120x120":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","180x180":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png"}},"github-buttons":{"buttons":[{"user":"frederickhou","repo":"Kubernetes-notes","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"sharing":{"facebook":false,"qq":false,"qzone":false,"twitter":false,"weibo":false,"all":["facebook","weibo","twitter","qq","qzone"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"Frederick hou","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Kubernetes 学习笔记","language":"zh-hans","links":{"sidebar":{"我的博客":"https://www.frederickhou.com"}},"gitbook":"3.2.3","description":"在成为极客的路上"},"file":{"path":"develop/client_go.md","mtime":"2020-04-02T05:55:44.674Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T06:36:07.612Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1,0 +1,960 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Elasticsearch 容器化方案 · Kubernetes 学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Frederick hou">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="MySQL_basia.html" />
+    
+    
+    <link rel="prev" href="Elasticsearch_basis.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png'>
+    
+    
+        
+        <link rel="apple-touch-icon" sizes="120x120" href="../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="../https:/github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png">
+        
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"frederickhou","repo":"Kubernetes-notes","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://www.frederickhou.com" target="_blank" class="custom-link">我的博客</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    目录
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../intruduce.html">
+            
+                <a href="../intruduce.html">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../concept/">
+            
+                <a href="../concept/">
+            
+                    
+                    第一章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../concept/kubernetes_fundation.html">
+            
+                <a href="../concept/kubernetes_fundation.html">
+            
+                    
+                    Kubernetes基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../concept/kubernetes_compoent.html">
+            
+                <a href="../concept/kubernetes_compoent.html">
+            
+                    
+                    Kubernetes核心组件介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../concept/kubernetes_tech_stack.html">
+            
+                <a href="../concept/kubernetes_tech_stack.html">
+            
+                    
+                    Kubernetes容器云平台技术栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../setup/">
+            
+                <a href="../setup/">
+            
+                    
+                    第二章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../setup/kubernetes_install_deploy.html">
+            
+                <a href="../setup/kubernetes_install_deploy.html">
+            
+                    
+                    Kubernetes安装与配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../setup/obj.html">
+            
+                <a href="../setup/obj.html">
+            
+                    
+                    Kubernetes对象理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../setup/affinity_antiaffinity.html">
+            
+                <a href="../setup/affinity_antiaffinity.html">
+            
+                    
+                    Kubernetes 亲和性和反亲和性
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../resource_obj/">
+            
+                <a href="../resource_obj/">
+            
+                    
+                    第三章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../resource_obj/Pod_Job.html">
+            
+                <a href="../resource_obj/Pod_Job.html">
+            
+                    
+                    POD和JOB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../resource_obj/namespace.html">
+            
+                <a href="../resource_obj/namespace.html">
+            
+                    
+                    Namespace
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../resource_obj/secret.html">
+            
+                <a href="../resource_obj/secret.html">
+            
+                    
+                    Secret
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../resource_obj/configmap.html">
+            
+                <a href="../resource_obj/configmap.html">
+            
+                    
+                    ConfigMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../resource_obj/volume.html">
+            
+                <a href="../resource_obj/volume.html">
+            
+                    
+                    Volume
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../resource_obj/pv_pvc.html">
+            
+                <a href="../resource_obj/pv_pvc.html">
+            
+                    
+                    PersistentVolume&PersistentVolumeClaim
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../resource_obj/service.html">
+            
+                <a href="../resource_obj/service.html">
+            
+                    
+                    Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../resource_obj/ingress.html">
+            
+                <a href="../resource_obj/ingress.html">
+            
+                    
+                    Ingress
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../resource_obj/replicaset.html">
+            
+                <a href="../resource_obj/replicaset.html">
+            
+                    
+                    ReplicaSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../resource_obj/deployment.html">
+            
+                <a href="../resource_obj/deployment.html">
+            
+                    
+                    Deployment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../resource_obj/daemonset.html">
+            
+                <a href="../resource_obj/daemonset.html">
+            
+                    
+                    DaemonSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../resource_obj/statefulset.html">
+            
+                <a href="../resource_obj/statefulset.html">
+            
+                    
+                    Statefulset
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../develop/">
+            
+                <a href="../develop/">
+            
+                    
+                    第四章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../develop/schedule.html">
+            
+                <a href="../develop/schedule.html">
+            
+                    
+                    Schedule源码学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../develop/client_go.html">
+            
+                <a href="../develop/client_go.html">
+            
+                    
+                    client-go源码学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    第五章
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="Elasticsearch_basis.html">
+            
+                <a href="Elasticsearch_basis.html">
+            
+                    
+                    Elasticsearch 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7.2" data-path="Elasticsearch_deploy.html">
+            
+                <a href="Elasticsearch_deploy.html">
+            
+                    
+                    Elasticsearch 容器化方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="MySQL_basia.html">
+            
+                <a href="MySQL_basia.html">
+            
+                    
+                    MySQL 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="MySQL_deploy.html">
+            
+                <a href="MySQL_deploy.html">
+            
+                    
+                    MySQL 容器化方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Elasticsearch 容器化方案</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;"><b></b>Elasticsearch&#x4EE5;&#x53CA;Kibana &#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;</a></li><ul><li><span class="title-icon "></span><a href="#elasticsearch&#x4ECB;&#x7ECD;"><b></b>Elasticsearch&#x4ECB;&#x7ECD;</a></li><li><span class="title-icon "></span><a href="#kibana&#x4ECB;&#x7ECD;"><b></b>Kibana&#x4ECB;&#x7ECD;</a></li><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;elasticsearch&#x670D;&#x52A1;"><b></b>&#x521B;&#x5EFA;Elasticsearch&#x670D;&#x52A1;</a></li><ul><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;elasticsearch--service"><b></b>&#x521B;&#x5EFA;Elasticsearch  Service</a></li></ul></ul><li><span class="title-icon "></span><a href="#kubectl-get-service--n-local-pv--o-wide"><b></b>kubectl get service -n local-pv -o wide</a></li><ul><ul><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;elasticsearch--statefulset"><b></b>&#x521B;&#x5EFA;Elasticsearch  Statefulset</a></li></ul><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;kibana&#x670D;&#x52A1;"><b></b>&#x521B;&#x5EFA;Kibana&#x670D;&#x52A1;</a></li><ul><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;kibana--service&#xFF08;nodeport&#x6A21;&#x5F0F;&#xFF09;"><b></b>&#x521B;&#x5EFA;Kibana  Service&#xFF08;NodePort&#x6A21;&#x5F0F;&#xFF09;</a></li><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;kibana-&#x670D;&#x52A1;"><b></b>&#x521B;&#x5EFA;Kibana &#x670D;&#x52A1;</a></li></ul></ul></ul></div><a href="#elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;"><a name="elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;" class="anchor-navigation-ex-anchor" href="#elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;" class="plugin-anchor" href="#elasticsearch&#x4EE5;&#x53CA;kibana-&#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;"><i class="fa fa-link" aria-hidden="true"></i></a>Elasticsearch&#x4EE5;&#x53CA;Kibana &#x5BB9;&#x5668;&#x5316;&#x7F16;&#x6392;</h1>
+<h2 id="elasticsearch&#x4ECB;&#x7ECD;"><a name="elasticsearch&#x4ECB;&#x7ECD;" class="anchor-navigation-ex-anchor" href="#elasticsearch&#x4ECB;&#x7ECD;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="elasticsearch&#x4ECB;&#x7ECD;" class="plugin-anchor" href="#elasticsearch&#x4ECB;&#x7ECD;"><i class="fa fa-link" aria-hidden="true"></i></a>Elasticsearch&#x4ECB;&#x7ECD;</h2>
+<p>&#x8BF7;&#x53C2;&#x8003;&#xFF1A;<a href="https://www.frederickhou.com/2020/03/17/ElasticSearch-%E4%B8%80-%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" target="_blank">ElasticSearch(&#x4E00;)&#x57FA;&#x7840;&#x4ECB;&#x7ECD;</a></p>
+<h2 id="kibana&#x4ECB;&#x7ECD;"><a name="kibana&#x4ECB;&#x7ECD;" class="anchor-navigation-ex-anchor" href="#kibana&#x4ECB;&#x7ECD;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="kibana&#x4ECB;&#x7ECD;" class="plugin-anchor" href="#kibana&#x4ECB;&#x7ECD;"><i class="fa fa-link" aria-hidden="true"></i></a>Kibana&#x4ECB;&#x7ECD;</h2>
+<p>Kibana&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x7684;&#x5206;&#x6790;&#x4E0E;&#x53EF;&#x89C6;&#x5316;&#x5E73;&#x53F0;&#xFF0C;&#x8BBE;&#x8BA1;&#x51FA;&#x6765;&#x7528;&#x4E8E;&#x548C;Elasticsearch&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#x7684;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x7528;kibana&#x641C;&#x7D22;&#x3001;&#x67E5;&#x770B;&#x5B58;&#x653E;&#x5728;Elasticsearch&#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002;Kibana&#x4E0E;Elasticsearch&#x7684;&#x4EA4;&#x4E92;&#x65B9;&#x5F0F;&#x662F;&#x5404;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x56FE;&#x8868;&#x3001;&#x8868;&#x683C;&#x3001;&#x5730;&#x56FE;&#x7B49;&#xFF0C;&#x76F4;&#x89C2;&#x7684;&#x5C55;&#x793A;&#x6570;&#x636E;&#xFF0C;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x9AD8;&#x7EA7;&#x7684;&#x6570;&#x636E;&#x5206;&#x6790;&#x4E0E;&#x53EF;&#x89C6;&#x5316;&#x7684;&#x76EE;&#x7684;&#x3002;
+Elasticsearch&#x3001;Logstash&#x548C;Kibana&#x8FD9;&#x4E09;&#x4E2A;&#x6280;&#x672F;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x5E38;&#x8BF4;&#x7684;ELK&#x6280;&#x672F;&#x6808;&#xFF0C;&#x53EF;&#x4EE5;&#x8BF4;&#x8FD9;&#x4E09;&#x4E2A;&#x6280;&#x672F;&#x7684;&#x7EC4;&#x5408;&#x662F;&#x5927;&#x6570;&#x636E;&#x9886;&#x57DF;&#x4E2D;&#x4E00;&#x4E2A;&#x5F88;&#x5DE7;&#x5999;&#x7684;&#x8BBE;&#x8BA1;&#x3002;&#x4E00;&#x79CD;&#x5F88;&#x5178;&#x578B;&#x7684;MVC&#x601D;&#x60F3;&#xFF0C;&#x6A21;&#x578B;&#x6301;&#x4E45;&#x5C42;&#xFF0C;&#x89C6;&#x56FE;&#x5C42;&#x548C;&#x63A7;&#x5236;&#x5C42;&#x3002;Logstash&#x62C5;&#x4EFB;&#x63A7;&#x5236;&#x5C42;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x8D1F;&#x8D23;&#x641C;&#x96C6;&#x548C;&#x8FC7;&#x6EE4;&#x6570;&#x636E;&#x3002;Elasticsearch&#x62C5;&#x4EFB;&#x6570;&#x636E;&#x6301;&#x4E45;&#x5C42;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x8D1F;&#x8D23;&#x50A8;&#x5B58;&#x6570;&#x636E;&#x3002;&#x800C;&#x6211;&#x4EEC;&#x8FD9;&#x7AE0;&#x7684;&#x4E3B;&#x9898;Kibana&#x62C5;&#x4EFB;&#x89C6;&#x56FE;&#x5C42;&#x89D2;&#x8272;&#xFF0C;&#x62E5;&#x6709;&#x5404;&#x79CD;&#x7EF4;&#x5EA6;&#x7684;&#x67E5;&#x8BE2;&#x548C;&#x5206;&#x6790;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;&#x56FE;&#x5F62;&#x5316;&#x7684;&#x754C;&#x9762;&#x5C55;&#x793A;&#x5B58;&#x653E;&#x5728;Elasticsearch&#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>Kibana &#x7684;docker&#x955C;&#x50CF;&#x8FD0;&#x7528; Centos:7&#x4F5C;&#x4E3A;&#x57FA;&#x7840;&#x955C;&#x50CF;&#x3002;&#x53D1;&#x5E03;&#x8FC7;&#x7684;&#x76F8;&#x5173;Docker&#x955C;&#x50CF;&#x5305;&#x53EF;&#x4EE5;&#x5728;www.docker.elastic.co&#x5B98;&#x7F51;&#x8FDB;&#x884C;&#x67E5;&#x3002;&#x7B14;&#x8005;&#x9009;&#x7528;<strong>6.8.7</strong>&#x7248;&#x672C;&#x8FDB;&#x884C;&#x5B89;&#x88C5;&#x6F14;&#x793A;&#x3002;</p>
+<h2 id="&#x521B;&#x5EFA;elasticsearch&#x670D;&#x52A1;"><a name="&#x521B;&#x5EFA;elasticsearch&#x670D;&#x52A1;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;elasticsearch&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;elasticsearch&#x670D;&#x52A1;" class="plugin-anchor" href="#&#x521B;&#x5EFA;elasticsearch&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;Elasticsearch&#x670D;&#x52A1;</h2>
+<h3 id="&#x521B;&#x5EFA;elasticsearch--service"><a name="&#x521B;&#x5EFA;elasticsearch--service" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;elasticsearch--service"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;elasticsearch--service" class="plugin-anchor" href="#&#x521B;&#x5EFA;elasticsearch--service"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;Elasticsearch  Service</h3>
+<ul>
+<li><p><strong>&#x521B;&#x5EFA;Elasticsearch&#x96C6;&#x7FA4;&#x8282;&#x70B9;&#x53D1;&#x73B0;&#x670D;&#x52A1;&#xFF08;NodePort&#x6A21;&#x5F0F;&#xFF09;</strong></p>
+<p>  <strong>&#x95EE;&#x9898;</strong>&#xFF1A;es&#x8BE5;&#x5982;&#x4F55;&#x53D1;&#x73B0;&#x5176;&#x4ED6;&#x8282;&#x70B9;&#xFF1F;
+  &#x8003;&#x8651;&#x5230;es&#x7684;discovery.zen.ping.unicast.hosts&#x53C2;&#x6570;&#x53EF;&#x6307;&#x5B9A;&#x591A;IP&#x57DF;&#x540D;&#xFF0C;&#x90A3;&#x4E48;&#xFF1A;</p>
+<ul>
+<li>&#x4E3A;es&#x521B;&#x5EFA;headless service&#x3002;</li>
+<li><p>&#x6307;&#x5B9A;&#x8BE5;&#x53C2;&#x6570;&#x4E3A;service&#x540D;&#x3002;</p>
+<p>&#x5373;&#x53EF;&#x8BA9;es&#x53D1;&#x73B0;&#x5176;&#x4ED6;&#x8282;&#x70B9;&#x3002;</p>
+<p>  apiVersion: v1
+  kind: Service
+  metadata:
+  labels:</p>
+<pre><code>  app: es-cluster-discovery
+</code></pre><p>  name: es-cluster-discovery
+  spec:
+  selector:</p>
+<pre><code>  app: es-node-instanceid
+</code></pre><p>  ports:</p>
+<pre><code>  - port: 9300
+  targetPort: 9300
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>&#x521B;&#x5EFA;Elasticsearch&#x96C6;&#x7FA4;&#x8282;&#x70B9;&#x8BBF;&#x95EE;&#x670D;&#x52A1;</strong></p>
+<pre><code>  apiVersion: v1
+  kind: Service
+  metadata:
+  labels:
+      app: es-cluster-service
+  name: es-cluster-service
+  spec:
+  selector:
+      app: es-node-instanceid
+  type: NodePort
+  ports:
+      - port: 9200
+      targetPort: 9200
+</code></pre><p>&#x521B;&#x5EFA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<h1 id="kubectl-get-service--n-local-pv--o-wide"><a name="kubectl-get-service--n-local-pv--o-wide" class="anchor-navigation-ex-anchor" href="#kubectl-get-service--n-local-pv--o-wide"><i class="fa fa-link" aria-hidden="true"></i></a><a name="kubectl-get-service--n-local-pv--o-wide" class="plugin-anchor" href="#kubectl-get-service--n-local-pv--o-wide"><i class="fa fa-link" aria-hidden="true"></i></a>kubectl get service -n local-pv -o wide</h1>
+<p>  NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE     SELECTOR
+  es-cluster-discovery   ClusterIP   10.101.18.179    <none>        9300/TCP         22h     app=es-node-instanceid
+  es-cluster-service     NodePort    10.106.56.69     <none>        9200:30709/TCP   7h5m    app=es-node-instanceid</none></none></p>
+</li>
+</ul>
+<h3 id="&#x521B;&#x5EFA;elasticsearch--statefulset"><a name="&#x521B;&#x5EFA;elasticsearch--statefulset" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;elasticsearch--statefulset"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;elasticsearch--statefulset" class="plugin-anchor" href="#&#x521B;&#x5EFA;elasticsearch--statefulset"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;Elasticsearch  Statefulset</h3>
+<h4 id="&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;"><a name="&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;" class="anchor-navigation-ex-anchor" href="#&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;" class="plugin-anchor" href="#&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;</h4>
+<ul>
+<li><strong>cluster.name</strong>&#xFF1A;&#x96C6;&#x7FA4;&#x540D;&#x79F0;&#xFF0C;&#x76F8;&#x540C;&#x96C6;&#x7FA4;&#x540D;&#x79F0;&#x7684;&#x8282;&#x70B9;&#x4F1A;&#x534F;&#x8C03;&#x9009;&#x4E3E;MASTER&#x4EE5;&#x53CA;&#x8BC6;&#x522B;&#x52A0;&#x5165;&#x96C6;&#x7FA4;&#x3002;</li>
+<li><strong>discovery.zen.ping.unicast.hosts</strong>&#xFF1A; &#x96C6;&#x7FA4;&#x53D1;&#x73B0;&#x5176;&#x4ED6;&#x8282;&#x70B9;&#xFF0C;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x8282;&#x70B9;&#x901A;&#x8FC7;&#x6B64;&#x670D;&#x52A1;&#x52A0;&#x5165;&#x96C6;&#x7FA4;&#x3002;</li>
+<li><strong>discovery.zen.minimum_master_nodes</strong>&#xFF1A; &#x6784;&#x6210;&#x96C6;&#x7FA4;&#x7684;&#x6700;&#x5C11;master&#x8282;&#x70B9;&#x6570;&#x3002;&#x4E00;&#x822C;&#x8BBE;&#x7F6E;&#x4E3A;n/2+1&#x4E2A;&#xFF0C;&#x9632;&#x6B62;&#x201C;&#x8111;&#x88C2;&#x201D;&#x73B0;&#x8C61;&#x3002;</li>
+</ul>
+<h4 id="&#x521B;&#x5EFA;&#x670D;&#x52A1;"><a name="&#x521B;&#x5EFA;&#x670D;&#x52A1;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;&#x670D;&#x52A1;" class="plugin-anchor" href="#&#x521B;&#x5EFA;&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;&#x670D;&#x52A1;</h4>
+<pre><code>apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: es-instanceid
+  labels:
+    app: es-node-instanceid
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: es-node-instanceid
+  #noted: serviceName is the real service name
+  serviceName: &quot;es-cluster-service&quot;
+  template:
+    metadata:
+      labels:
+        app: es-node-instanceid
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: &apos;&apos;
+    spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+      - name: fix-permissions
+        image: docker.io/busybox:latest
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;chown -R 1000:1000 /usr/share/elasticsearch/data&quot;]
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+      - name: increase-vm-max-map
+        image: docker.io/busybox:latest
+        command: [&quot;sysctl&quot;, &quot;-w&quot;, &quot;vm.max_map_count=262144&quot;]
+        securityContext:
+          privileged: true
+      - name: increase-fd-ulimit
+        image: docker.io/busybox:latest
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;ulimit -n 65536&quot;]
+        securityContext:
+          privileged: true
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.8.7
+        imagePullPolicy: Always
+        env:
+        - name: &quot;cluster.name&quot;
+          value: &quot;elasticsearch-cluster&quot;
+        - name: &quot;ES_JAVA_OPTS&quot;
+          value: &quot;-Xms512m -Xmx512m&quot;
+        - name: &quot;discovery.zen.ping.unicast.hosts&quot;
+          value: &quot;es-cluster-discovery&quot;
+        - name: &quot;discovery.zen.minimum_master_nodes&quot;
+          value: &quot;2&quot;
+       # - name: &quot;bootstrap.memory_lock&quot;
+       #   value: &quot;true&quot;
+        ports:
+        - containerPort: 9200
+          protocol: TCP
+          name: discovery
+        - containerPort: 9300
+          protocol: TCP
+          name: transport
+        volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: data
+            - mountPath: /usr/share/elasticsearch/logs
+              name: data
+        #resources:
+         # limits:
+           # cpu: 25m
+           # memory: 3Gi
+      nodeSelector:
+        kubernetes.io/hostname: cent165
+      volumes:
+         - name: data
+           #emptyDir: {}
+           hostPath:
+              path: &quot;/ocdf_local_pv_vg0/es&quot;
+</code></pre><p><strong>&#x6CE8;</strong>&#xFF1A;&#x7B14;&#x8005;&#x4E3A;&#x4E86;&#x6F14;&#x793A;&#x521B;&#x5EFA;&#x4E86;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x6B63;&#x5F0F;&#x4F7F;&#x7528;&#x5FC5;&#x987B;&#x9075;&#x5FAA;&#x89C4;&#x5219;&#x9632;&#x6B62;&#x201C;&#x8111;&#x88C2;&#x201D;&#x73B0;&#x8C61;&#x3002;
+&#x521B;&#x5EFA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code># kubectl get pod -n local-pv -o wide
+NAME                      READY   STATUS    RESTARTS   AGE   IP                NODE      NOMINATED NODE   READINESS GATES
+es-instanceid-1-0         1/1     Running   0          22h   100.81.251.208    cent166   &lt;none&gt;           &lt;none&gt;
+es-instanceid-2-0         1/1     Running   0          22h   100.110.104.217   cent165   &lt;none&gt;           &lt;none&gt;
+</code></pre><p>&#x67E5;&#x770B;&#x96C6;&#x7FA4;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#xFF1A;green&#x8868;&#x793A;&#x5065;&#x5EB7;</p>
+<pre><code>#curl http://10.1.234.164:30709/_cluster/health?pretty
+{
+&quot;cluster_name&quot; : &quot;elasticsearch-cluster&quot;,
+&quot;status&quot; : &quot;green&quot;,
+&quot;timed_out&quot; : false,
+&quot;number_of_nodes&quot; : 2,
+&quot;number_of_data_nodes&quot; : 2,
+&quot;active_primary_shards&quot; : 5,
+&quot;active_shards&quot; : 10,
+&quot;relocating_shards&quot; : 0,
+&quot;initializing_shards&quot; : 0,
+&quot;unassigned_shards&quot; : 0,
+&quot;delayed_unassigned_shards&quot; : 0,
+&quot;number_of_pending_tasks&quot; : 0,
+&quot;number_of_in_flight_fetch&quot; : 0,
+&quot;task_max_waiting_in_queue_millis&quot; : 0,
+&quot;active_shards_percent_as_number&quot; : 100.0
+}
+</code></pre><p>&#x67E5;&#x770B;&#x96C6;&#x7FA4;nodes:</p>
+<pre><code>#curl http://10.1.234.164:30709/_cat/nodes?v
+ip              heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
+100.110.104.217           60          94   2    0.33    0.13     0.07 mdi       *      1mSnPgt
+100.81.251.208            62          97   3    0.27    0.19     0.20 mdi       -      clNDNoX
+</code></pre><p>&#x67E5;&#x770B;&#x96C6;&#x7FA4;masters:</p>
+<pre><code>#curl http://10.1.234.164:30709/_cat/master?v
+id                     host            ip              node
+1mSnPgtDS8O3_FsmX-PGLA 100.110.104.217 100.110.104.217 1mSnPgt
+</code></pre><h2 id="&#x521B;&#x5EFA;kibana&#x670D;&#x52A1;"><a name="&#x521B;&#x5EFA;kibana&#x670D;&#x52A1;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;kibana&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;kibana&#x670D;&#x52A1;" class="plugin-anchor" href="#&#x521B;&#x5EFA;kibana&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;Kibana&#x670D;&#x52A1;</h2>
+<h3 id="&#x521B;&#x5EFA;kibana--service&#xFF08;nodeport&#x6A21;&#x5F0F;&#xFF09;"><a name="&#x521B;&#x5EFA;kibana--service&#xFF08;nodeport&#x6A21;&#x5F0F;&#xFF09;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;kibana--service&#xFF08;nodeport&#x6A21;&#x5F0F;&#xFF09;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;kibana--service&#xFF08;nodeport&#x6A21;&#x5F0F;&#xFF09;" class="plugin-anchor" href="#&#x521B;&#x5EFA;kibana--service&#xFF08;nodeport&#x6A21;&#x5F0F;&#xFF09;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;Kibana  Service&#xFF08;NodePort&#x6A21;&#x5F0F;&#xFF09;</h3>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+name: kibana
+labels:
+    app: kibana
+spec:
+type: NodePort
+ports:
+- port: 5601
+selector:
+    app: kibana
+</code></pre><p>&#x521B;&#x5EFA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code># kubectl get service -n local-pv -o wide
+kibana                 NodePort    10.107.131.227   &lt;none&gt;        5601:31920/TCP   6h49m   app=kibana
+</code></pre><h3 id="&#x521B;&#x5EFA;kibana-&#x670D;&#x52A1;"><a name="&#x521B;&#x5EFA;kibana-&#x670D;&#x52A1;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;kibana-&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;kibana-&#x670D;&#x52A1;" class="plugin-anchor" href="#&#x521B;&#x5EFA;kibana-&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;Kibana &#x670D;&#x52A1;</h3>
+<h4 id="&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;_1"><a name="&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;_1" class="anchor-navigation-ex-anchor" href="#&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;_1"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;" class="plugin-anchor" href="#&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;</h4>
+<ul>
+<li><strong>ELASTICSEARCH_URL</strong>: &#x8FDE;&#x63A5;es&#x7684;url&#xFF0C;&#x5982;&#xFF1A;&quot;<a href="http://es-cluster-service:9200" target="_blank">http://es-cluster-service:9200</a>&quot; &#x5176;&#x4E2D;&#x201C;es-cluster-service&#x201D;&#x662F;es&#x96C6;&#x7FA4;&#x7684;9200 service name&#x3002;</li>
+<li><strong>elasticsearch.hosts</strong>&#xFF1A;es&#x7684;host&#x5217;&#x8868;&#xFF0C;&#x4E00;&#x822C;&#x4E5F;&#x662F;&#x8BBE;&#x7F6E;&#x6210;es 9200 service name&#x3002;&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x540D;&#x5B57;&#x53EF;&#x4EE5;&#x89E3;&#x6790;&#x51FA;&#x5BF9;&#x5E94;&#x8282;&#x70B9;&#x7684;IP&#x3002;</li>
+</ul>
+<h4 id="&#x521B;&#x5EFA;&#x670D;&#x52A1;&#xFF1A;"><a name="&#x521B;&#x5EFA;&#x670D;&#x52A1;&#xFF1A;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;&#x670D;&#x52A1;&#xFF1A;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x521B;&#x5EFA;&#x670D;&#x52A1;&#xFF1A;" class="plugin-anchor" href="#&#x521B;&#x5EFA;&#x670D;&#x52A1;&#xFF1A;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x521B;&#x5EFA;&#x670D;&#x52A1;&#xFF1A;</h4>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    app: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:6.8.7
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        env:
+          - name: &quot;ELASTICSEARCH_URL&quot;
+            value: &quot;http://es-cluster-service:9200&quot;
+          - name: &quot;elasticsearch.hosts&quot;
+            value: &quot;es-cluster-service&quot;
+          - name: &quot;elasticsearch.username&quot;
+            value: &quot;admin&quot;
+          - name: &quot;elasticsearch.password&quot;
+            value: &quot;admin&quot;
+        ports:
+        - containerPort: 5601
+</code></pre><p>&#x521B;&#x5EFA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code># kubectl get pod -n local-pv -o wide
+kibana-76969bdf57-xzxc9   1/1     Running   0          73m   100.81.251.214    cent166   &lt;none&gt;           &lt;none&gt;
+</code></pre><h4 id="&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;"><a name="&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;" class="anchor-navigation-ex-anchor" href="#&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;" class="plugin-anchor" href="#&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;</h4>
+<p>&#x6D4F;&#x89C8;&#x5668;&#x5730;&#x5740;&#x4E2D;&#x8F93;&#x5165;&#xFF1A;<a href="http://10.1.234.164:31920" target="_blank">http://10.1.234.164:31920</a> &#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="https://github.com/FrederickHou/FrederickHou.github.io/blob/master/img/kibana1.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/FrederickHou/FrederickHou.github.io/blob/master/img/kibana2.jpg?raw=true" alt=""></p>
+<p>es&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#xFF1A;
+<img src="https://github.com/FrederickHou/FrederickHou.github.io/blob/master/img/kibana3.jpg?raw=true" alt=""></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Elasticsearch_basis.html" class="navigation navigation-prev " aria-label="Previous page: Elasticsearch 基础">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="MySQL_basia.html" class="navigation navigation-next " aria-label="Next page: MySQL 基础">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Elasticsearch 容器化方案","level":"1.7.2","depth":2,"next":{"title":"MySQL 基础","level":"1.7.3","depth":2,"path":"bigdata/MySQL_basia.md","ref":"bigdata/MySQL_basia.md","articles":[]},"previous":{"title":"Elasticsearch 基础","level":"1.7.1","depth":2,"path":"bigdata/Elasticsearch_basis.md","ref":"bigdata/Elasticsearch_basis.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","splitter","expandable-chapters-small","anchors","github","github-buttons","donate","sharing-plus","anchor-navigation-ex","favicon"],"styles":{"website":"./styles/website.css"},"pluginsConfig":{"github":{"url":"https://github.com/FrederickHou/Kubernetes-notes"},"splitter":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"","alipayText":"支付宝打赏","button":"赞赏","title":"","wechat":"https://github.com/FrederickHou/Kubernetes-notes/blob/master/source/images/wechat.jpg?raw=true","wechatText":""},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"favicon":{"shortcut":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","bookmark":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/images.png","appleTouch":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","appleTouchMore":{"120x120":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png","180x180":"https://github.com/FrederickHou/Kubernetes-notes/tree/master/source/images/kubernetes-card.png"}},"github-buttons":{"buttons":[{"user":"frederickhou","repo":"Kubernetes-notes","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"sharing":{"facebook":false,"qq":false,"qzone":false,"twitter":false,"weibo":false,"all":["facebook","weibo","twitter","qq","qzone"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"Frederick hou","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Kubernetes 学习笔记","language":"zh-hans","links":{"sidebar":{"我的博客":"https://www.frederickhou.com"}},"gitbook":"3.2.3","description":"在成为极客的路上"},"file":{"path":"bigdata/Elasticsearch_deploy.md","mtime":"2020-04-02T05:48:27.327Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T06:36:07.612Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
